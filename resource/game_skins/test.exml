@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="myskin.test" width="400" height="300" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="testbg" width="155" height="196" x="122.5" y="65" anchorOffsetX="0" anchorOffsetY="0" source="bg_jpg"/>
+</e:Skin>
