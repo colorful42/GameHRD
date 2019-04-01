@@ -6,8 +6,8 @@ var GameData = (function () {
     }
     GameData.step = 0; //记录步数
     GameData.LENGTH = 600;
-    GameData.chess = ["1p1_png", "1p2_png", "2p2_png", "2p10_png",
-        "2p11_png", "2p12_png", "2p13_png"];
+    GameData.chess = ["zhao_png", "cao_png", "zhang_png", "ma_png",
+        "guan_png", "huang_png", "zu_png", "zu_png", "zu_png", "zu_png"];
     return GameData;
 }());
 __reflect(GameData.prototype, "GameData");

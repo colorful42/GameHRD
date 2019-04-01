@@ -1,6 +1,8 @@
 class CheerMove extends egret.Sprite{
     private pieces:Array<CheerPieces>;
     public cheerLength:number;
+    public offsetX:number;
+    public offsetY:number;
 
     public gameStartPanel:GameStartPanel;    //开始界面
     /*
@@ -24,7 +26,7 @@ class CheerMove extends egret.Sprite{
         this.init(GameData.chess);
         // this.upset();
         this.show();
-        this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onCheersClick,this);
+       // this.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCheersClick,this);
 
     }
 
@@ -33,87 +35,67 @@ class CheerMove extends egret.Sprite{
     }
 
     public init(arrs:Array<string>){
-        // for(var k=0;k<7;k++){
-        // // var pieces1:CheerPieces = new CheerPieces;
-        // // pieces1.createImg(arrs[k]);
-        // // pieces1.loc_x = k+1;
-        // // pieces1.loc_y = k+2;
-        // var img:egret.Bitmap = new egret.Bitmap();
-        // img.texture = RES.getRes(arrs[k]);
-        // this.addChild(img);
-        // img.x=k*2+100;
-        // img.y=k*3+100;
-    
-        // }
-        var zhaoimg:egret.Bitmap = new egret.Bitmap();
-        zhaoimg.texture = RES.getRes("2p13_png");
-        this.addChild(zhaoimg);
-        zhaoimg.x=120;
-        zhaoimg.y=50;
-        zhaoimg.touchEnabled=true;
+        this.pieces = [];
 
-        var cao:egret.Bitmap = new egret.Bitmap();
-        cao.texture = RES.getRes("2p2_png");
-        this.addChild(cao);
-        cao.x=220;
-        cao.y=50;
-        cao.touchEnabled=true;
+        var k = 0;
+        for(var i=0;i<10;i++){
+            
+                var img:CheerPieces = new CheerPieces();
+                img.createImg(arrs[k++]);  
+               switch(i){
+                   case 0:
+                   img.x = 120;
+                   img.y = 50;
+                   break;
+                   case 1:
+                   img.x = 220;
+                   img.y = 50;
+                   break;
+                   case 2:
+                   img.x = 420;
+                   img.y = 50;
+                   break;
+                   case 3:
+                   img.x = 120;
+                   img.y = 250;
+                   break;
+                   case 4:
+                   img.x = 220;
+                   img.y = 250;
+                   break;
+                   case 5:
+                   img.x = 420;
+                   img.y = 250;
+                   break;
+                   case 6:
+                   img.x = 220;
+                   img.y = 350;
+                   break;
+                   case 7:
+                   img.x = 320;
+                   img.y = 350;
+                   break;
+                   case 8:
+                   img.x = 120;
+                   img.y = 450;
+                   break;
+                   case 9:
+                   img.x = 420;
+                   img.y = 450;
+                   break;
+               }  
+                this.addChild(img); 
+                this.pieces.push(img);  
 
-        var zhang:egret.Bitmap = new egret.Bitmap();
-        zhang.texture = RES.getRes("2p12_png");
-        this.addChild(zhang);
-        zhang.x=420;
-        zhang.y=50;
-        zhang.touchEnabled=true;
-
-        var ma:egret.Bitmap = new egret.Bitmap();
-        ma.texture = RES.getRes("2p11_png");
-        this.addChild(ma);
-        ma.x=120;
-        ma.y=250;
-        ma.touchEnabled=true;
+                img.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.startMove,this);
+                img.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCheersClick,this);
+                img.addEventListener(egret.TouchEvent.TOUCH_END,this.endMove,this);
+            
+        }
+    //    var piece:CheerPieces = new CheerPieces;
+    //    piece.show();
+    //    this.addChild(piece);
        
-        var guan:egret.Bitmap = new egret.Bitmap();
-        guan.texture = RES.getRes("1p2_png");
-        this.addChild(guan);
-        guan.x=220;
-        guan.y=250;
-        guan.touchEnabled=true;
- 
-        var huang:egret.Bitmap = new egret.Bitmap();
-        huang.texture = RES.getRes("2p11_png");
-        this.addChild(huang);
-        huang.x=420;
-        huang.y=250;
-        huang.touchEnabled=true;
-
-        var zu1:egret.Bitmap = new egret.Bitmap();
-        zu1.texture = RES.getRes("1p1_png");
-        this.addChild(zu1);
-        zu1.x=220;
-        zu1.y=350;
-        zu1.touchEnabled=true;
-
-        var zu2:egret.Bitmap = new egret.Bitmap();
-        zu2.texture = RES.getRes("1p1_png");
-        this.addChild(zu2);
-        zu2.x=320;
-        zu2.y=350;
-        zu2.touchEnabled=true;
-
-        var zu3:egret.Bitmap = new egret.Bitmap();
-        zu3.texture = RES.getRes("1p1_png");
-        this.addChild(zu3);
-        zu3.x=120;
-        zu3.y=450;
-        zu3.touchEnabled=true;
-
-        var zu4:egret.Bitmap = new egret.Bitmap();
-        zu4.texture = RES.getRes("1p1_png");
-        this.addChild(zu4);
-        zu4.x=420;
-        zu4.y=450;
-        zu4.touchEnabled=true;
 
         var shp:egret.Shape = new egret.Shape();
         shp.graphics.lineStyle( 50, 0xC0DBF3 );
@@ -124,15 +106,33 @@ class CheerMove extends egret.Sprite{
         shp.graphics.lineTo( 545, 575);
         shp.graphics.lineTo( 420, 575);
         shp.graphics.endFill();
+        shp.touchEnabled = false;
         this.addChild( shp );
 
     }
     public show(){
        
     }
+    public startMove(e:egret.TouchEvent):void{
+            this.pieces = e.target;
+            //计算手指和要拖动的对象的距离
+            //console.log(e.target.loc_x+","+e.target.loc_y);
+            this.offsetX = e.stageX - e.target.x;
+            this.offsetY = e.stageY - e.target.y;
+           // console.log(e.target.x+","+e.target.y);
+           // console.log(e.stageX+","+e.stageY);
 
-    public onCheersClick(evt:egret.TouchEvent){
-        console.log("c");
+           
+            this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCheersClick,this);
+    }
+     public onCheersClick(e:egret.TouchEvent):void{
+        e.target.x = e.stageX - this.offsetX;
+        e.target.y = e.stageY - this.offsetY;
     }
 
+    public endMove(){
+       this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCheersClick,this);
+    }
+
+   
 }

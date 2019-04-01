@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,select_btn_png,gametxt_png,1p1_png,1p2_png,2p10_png,2p11_png,2p12_png,2p13_png,2p2_png,bg_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,select_btn_png,gametxt_png,bg_png,zhao_png,zu_png,guan_png,cao_png,huang_png,ma_png,zhang_png",
 			"name": "preload"
 		}
 	],
@@ -147,44 +147,44 @@
 			"name": "gametxt_png"
 		},
 		{
-			"url": "assets/imgHRD/1p1.png",
-			"type": "image",
-			"name": "1p1_png"
-		},
-		{
-			"url": "assets/imgHRD/1p2.png",
-			"type": "image",
-			"name": "1p2_png"
-		},
-		{
-			"url": "assets/imgHRD/2p10.png",
-			"type": "image",
-			"name": "2p10_png"
-		},
-		{
-			"url": "assets/imgHRD/2p11.png",
-			"type": "image",
-			"name": "2p11_png"
-		},
-		{
-			"url": "assets/imgHRD/2p12.png",
-			"type": "image",
-			"name": "2p12_png"
-		},
-		{
-			"url": "assets/imgHRD/2p13.png",
-			"type": "image",
-			"name": "2p13_png"
-		},
-		{
-			"url": "assets/imgHRD/2p2.png",
-			"type": "image",
-			"name": "2p2_png"
-		},
-		{
 			"name": "bg_png",
 			"type": "image",
 			"url": "assets/imgHRD/bg.png"
+		},
+		{
+			"name": "zhao_png",
+			"type": "image",
+			"url": "assets/imgHRD/zhao.png"
+		},
+		{
+			"name": "zu_png",
+			"type": "image",
+			"url": "assets/imgHRD/zu.png"
+		},
+		{
+			"name": "guan_png",
+			"type": "image",
+			"url": "assets/imgHRD/guan.png"
+		},
+		{
+			"name": "cao_png",
+			"type": "image",
+			"url": "assets/imgHRD/cao.png"
+		},
+		{
+			"name": "huang_png",
+			"type": "image",
+			"url": "assets/imgHRD/huang.png"
+		},
+		{
+			"name": "ma_png",
+			"type": "image",
+			"url": "assets/imgHRD/ma.png"
+		},
+		{
+			"name": "zhang_png",
+			"type": "image",
+			"url": "assets/imgHRD/zhang.png"
 		}
 	]
 }
