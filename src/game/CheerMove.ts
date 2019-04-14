@@ -3,6 +3,9 @@ class CheerMove extends egret.Sprite{
     public cheerLength:number;
     public offsetX:number;
     public offsetY:number;
+    public nowX:number;
+    public nowY:number;
+    public a:boolean;
 
     public gameStartPanel:GameStartPanel;    //开始界面
     /*
@@ -24,14 +27,9 @@ class CheerMove extends egret.Sprite{
 
     public gameStart(){
         this.init(GameData.chess);
-        // this.upset();
         this.show();
        // this.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCheersClick,this);
 
-    }
-
-    public upset(){
-        console.log("a");
     }
 
     public init(arrs:Array<string>){
@@ -39,56 +37,57 @@ class CheerMove extends egret.Sprite{
 
         var k = 0;
         for(var i=0;i<10;i++){
-            
                 var img:CheerPieces = new CheerPieces();
                 img.createImg(arrs[k++]);  
-               switch(i){
+                switch(i){
                    case 0:
-                   img.x = 120;
-                   img.y = 50;
+                   img.x = 170;
+                   img.y = 150;
                    break;
                    case 1:
-                   img.x = 220;
-                   img.y = 50;
+                   img.x = 320;
+                   img.y = 150;
                    break;
                    case 2:
-                   img.x = 420;
-                   img.y = 50;
+                   img.x = 470;
+                   img.y = 150;
                    break;
                    case 3:
-                   img.x = 120;
-                   img.y = 250;
+                   img.x = 170;
+                   img.y = 350;
                    break;
                    case 4:
-                   img.x = 220;
-                   img.y = 250;
+                   img.x = 320;
+                   img.y = 300;
                    break;
                    case 5:
-                   img.x = 420;
-                   img.y = 250;
+                   img.x = 470;
+                   img.y = 350;
                    break;
                    case 6:
-                   img.x = 220;
-                   img.y = 350;
+                   img.x = 270;
+                   img.y = 400;
                    break;
                    case 7:
-                   img.x = 320;
-                   img.y = 350;
+                   img.x = 370;
+                   img.y = 400;
                    break;
                    case 8:
-                   img.x = 120;
-                   img.y = 450;
+                   img.x = 170;
+                   img.y = 500;
                    break;
                    case 9:
-                   img.x = 420;
-                   img.y = 450;
+                   img.x = 470;
+                   img.y = 500;
                    break;
                }  
+                img.anchorOffsetX = img.width/2;//设置图片锚点居中
+                img.anchorOffsetY = img.height/2;
                 this.addChild(img); 
                 this.pieces.push(img);  
 
                 img.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.startMove,this);
-                img.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCheersClick,this);
+                img.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onMove,this);
                 img.addEventListener(egret.TouchEvent.TOUCH_END,this.endMove,this);
             
         }
@@ -115,24 +114,30 @@ class CheerMove extends egret.Sprite{
     }
     public startMove(e:egret.TouchEvent):void{
             this.pieces = e.target;
-            //计算手指和要拖动的对象的距离
-            //console.log(e.target.loc_x+","+e.target.loc_y);
-            this.offsetX = e.stageX - e.target.x;
-            this.offsetY = e.stageY - e.target.y;
-           // console.log(e.target.x+","+e.target.y);
-           // console.log(e.stageX+","+e.stageY);
 
-           
-            this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCheersClick,this);
-    }
-     public onCheersClick(e:egret.TouchEvent):void{
-        e.target.x = e.stageX - this.offsetX;
-        e.target.y = e.stageY - this.offsetY;
+            this.offsetX = e.stageX-e.target.width/2;
+            this.offsetY = e.stageY-e.target.height/2;
+         e.target.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onMove,this);
     }
 
-    public endMove(){
-       this.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.onCheersClick,this);
+     public onMove(e:egret.TouchEvent):void{
+         this.nowX = e.stageX-e.target.width/2;
+         this.nowY = e.stageY-e.target.height/2;
+         if((this.nowX>this.offsetX)&&((this.nowX-this.offsetX>this.nowY-this.offsetY)||(this.nowX-this.offsetX>this.offsetY-this.nowY))){
+             e.target.x+=100;
+         }
+         else if((this.nowX<this.offsetX)&&((this.offsetX-this.nowX>this.nowY-this.offsetY)||(this.offsetX-this.nowX>this.offsetY-this.nowY))){
+              e.target.x-=100;
+         }
+         else if((this.nowY>this.offsetY)&&((this.nowX-this.offsetX<this.nowY-this.offsetY)||(this.offsetX-this.nowX<this.nowY-this.offsetY))){
+              e.target.y+=100;
+         }
+         else if((this.nowY<this.offsetY)&&((this.nowX-this.offsetX<this.offsetY-this.nowY)||(this.offsetX-this.nowX<this.offsetY-this.nowY))){
+             e.target.y-=100;
+         }
+         
     }
-
-   
+    public endMove(e:egret.TouchEvent):void{
+       e.target.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.onMove,this);
+    } 
 }
